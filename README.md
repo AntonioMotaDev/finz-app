@@ -283,6 +283,8 @@ Este proyecto está bajo la licencia **MIT**. Puedes usarlo libremente para proy
 
 ---
 
+ **Desarrollado por Antonio Mota** 
+
 
 <div align="center">
 
