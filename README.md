@@ -54,7 +54,7 @@
 - Visualiza tiempo restante y contribuciones
 
 ### Reportes Detallados
-- Reportes mensuales, semanales y anuales
+- Reportes semanales, mensuales y anuales
 - Análisis por categorías
 - Exportación de datos (JSON, CSV)
 - Evolución de patrimonio
