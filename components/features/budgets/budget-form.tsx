@@ -235,7 +235,7 @@ export function BudgetForm({ initialData, onSubmit, onCancel }: BudgetFormProps)
           >
             Cancelar
           </Button>
-          <Button className="bg-blue-900 hover:bg-gray-800" type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting}>
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {initialData?.id ? "Actualizar" : "Crear"} Presupuesto
           </Button>

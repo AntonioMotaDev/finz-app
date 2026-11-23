@@ -28,15 +28,15 @@ interface Props {
 export function RecentTransactionsTable({ transactions }: Props) {
   if (!transactions || transactions.length === 0) {
     return (
-      <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+      <Card className="border-border bg-card">
         <CardHeader>
           <CardTitle className="text-lg">Transacciones Recientes</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center justify-center py-8">
-          <p className="text-sm text-slate-400 mb-4">No hay transacciones recientes</p>
+          <p className="text-sm text-muted-foreground mb-4">No hay transacciones recientes</p>
           <Link
             href="/transactions"
-            className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            className="text-sm text-primary hover:text-primary/80 transition-colors"
           >
             Registrar primera transacción →
           </Link>
@@ -48,11 +48,11 @@ export function RecentTransactionsTable({ transactions }: Props) {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "INCOME":
-        return <ArrowUpRight className="h-4 w-4 text-emerald-400" />;
+        return <ArrowUpRight className="h-4 w-4 text-success" />;
       case "EXPENSE":
-        return <ArrowDownRight className="h-4 w-4 text-rose-400" />;
+        return <ArrowDownRight className="h-4 w-4 text-danger" />;
       case "TRANSFER":
-        return <ArrowRightLeft className="h-4 w-4 text-cyan-400" />;
+        return <ArrowRightLeft className="h-4 w-4 text-info" />;
       default:
         return null;
     }
@@ -61,26 +61,26 @@ export function RecentTransactionsTable({ transactions }: Props) {
   const getAmountColor = (type: string) => {
     switch (type) {
       case "INCOME":
-        return "text-emerald-400";
+        return "text-success";
       case "EXPENSE":
-        return "text-rose-400";
+        return "text-danger";
       case "TRANSFER":
-        return "text-cyan-400";
+        return "text-info";
       default:
-        return "text-slate-400";
+        return "text-muted-foreground";
     }
   };
 
   return (
-    <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+    <Card className="border-border bg-card">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle className="text-lg">Transacciones Recientes</CardTitle>
-          <p className="text-sm text-slate-400 mt-1">Últimos movimientos</p>
+          <p className="text-sm text-muted-foreground mt-1">Últimos movimientos</p>
         </div>
         <Link
           href="/transactions"
-          className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+          className="text-sm text-primary hover:text-primary/80 transition-colors"
         >
           Ver todas →
         </Link>
@@ -90,24 +90,24 @@ export function RecentTransactionsTable({ transactions }: Props) {
           {transactions.map((transaction) => (
             <div
               key={transaction.id}
-              className="flex items-center justify-between px-6 py-3 hover:bg-slate-900/50 transition-colors group"
+              className="flex items-center justify-between px-6 py-3 hover:bg-muted transition-colors group"
             >
               {/* Icono y descripción */}
               <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="rounded-full bg-slate-900 p-2 group-hover:bg-slate-800 transition-colors">
+                <div className="rounded-full bg-muted p-2 group-hover:bg-muted transition-colors">
                   {getTypeIcon(transaction.type)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-200 truncate">
+                  <p className="text-sm font-medium text-foreground truncate">
                     {transaction.description}
                   </p>
                   <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-xs text-slate-500">
+                    <span className="text-xs text-muted-foreground">
                       {transaction.account.name}
                     </span>
                     {transaction.category && (
                       <>
-                        <span className="text-xs text-slate-600">•</span>
+                        <span className="text-xs text-muted-foreground">•</span>
                         <div className="flex items-center gap-1">
                           <div
                             className="h-2 w-2 rounded-full"
@@ -115,7 +115,7 @@ export function RecentTransactionsTable({ transactions }: Props) {
                               backgroundColor: transaction.category.color || "#64748b",
                             }}
                           />
-                          <span className="text-xs text-slate-500">
+                          <span className="text-xs text-muted-foreground">
                             {transaction.category.name}
                           </span>
                         </div>
@@ -133,7 +133,7 @@ export function RecentTransactionsTable({ transactions }: Props) {
                     minimumFractionDigits: 2,
                   })}
                 </span>
-                <span className="text-xs text-slate-500">
+                <span className="text-xs text-muted-foreground">
                   {format(new Date(transaction.date), "dd MMM", { locale: es })}
                 </span>
               </div>

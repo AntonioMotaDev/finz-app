@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/db/prisma"
@@ -52,7 +53,7 @@ export async function POST(
     return NextResponse.json(goal)
   } catch (error) {
     if (error instanceof Error && error.name === "ZodError") {
-      return NextResponse.json({ error: "Datos inválidos", details: error }, { status: 400 })
+      return NextResponse.json({ error: "Datos inválidos", details: error instanceof z.ZodError ? error.issues : undefined }, { status: 400 })
     }
 
     console.error("Error contributing to savings goal:", error)

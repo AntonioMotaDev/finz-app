@@ -121,14 +121,14 @@ export function TransactionTable({
           icon: ArrowLeftRight,
           label: "Transferencia",
           color: "text-blue-500",
-          bgColor: "bg-blue-500/10",
+          bgColor: "bg-primary/10",
         };
       default:
         return {
           icon: TrendingUp,
           label: "Desconocido",
-          color: "text-gray-500",
-          bgColor: "bg-gray-500/10",
+          color: "text-muted-foreground",
+          bgColor: "bg-muted",
         };
     }
   };
@@ -175,11 +175,11 @@ export function TransactionTable({
 
   return (
     <>
-      <div className="rounded-lg border border-slate-800 bg-slate-900/50 overflow-hidden">
+      <div className="rounded-lg border border-border bg-muted/50 overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="border-slate-800 hover:bg-slate-800/50">
+              <TableRow className="border-border hover:bg-muted">
                 <TableHead className="w-[140px]">Fecha</TableHead>
                 <TableHead className="w-[130px]">Tipo</TableHead>
                 <TableHead>Descripción</TableHead>
@@ -197,7 +197,7 @@ export function TransactionTable({
                 return (
                   <TableRow
                     key={transaction.id}
-                    className="border-slate-800 hover:bg-slate-800/30"
+                    className="border-border hover:bg-muted"
                   >
                     <TableCell className="text-sm text-muted-foreground">
                       {format(new Date(transaction.date), "dd MMM yyyy", {
@@ -254,25 +254,25 @@ export function TransactionTable({
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-8 w-8 p-0 hover:bg-slate-800"
+                            className="h-8 w-8 p-0 hover:bg-muted"
                           >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
                           align="end"
-                          className="border-slate-800 bg-slate-900"
+                          className="border-border bg-muted"
                         >
                           <DropdownMenuItem
                             onClick={() => onEdit?.(transaction)}
-                            className="hover:bg-slate-800 focus:bg-slate-800"
+                            className="hover:bg-muted focus:bg-muted"
                           >
                             <Pencil className="mr-2 h-4 w-4" />
                             Editar
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => setDeleteId(transaction.id)}
-                            className="hover:bg-slate-800 focus:bg-slate-800 text-red-500 focus:text-red-500"
+                            className="hover:bg-muted focus:bg-muted text-red-500 focus:text-red-500"
                           >
                             <Trash2 className="mr-2 h-4 w-4" />
                             Eliminar
@@ -290,7 +290,7 @@ export function TransactionTable({
 
       {/* Dialog de confirmación de eliminación */}
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent className="border-slate-800 bg-slate-900">
+        <AlertDialogContent className="border-border bg-muted">
           <AlertDialogHeader>
             <AlertDialogTitle>¿Eliminar transacción?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -301,7 +301,7 @@ export function TransactionTable({
           <AlertDialogFooter>
             <AlertDialogCancel
               disabled={isDeleting}
-              className="border-slate-800 bg-slate-900 hover:bg-slate-800"
+              className="border-border bg-muted hover:bg-muted"
             >
               Cancelar
             </AlertDialogCancel>

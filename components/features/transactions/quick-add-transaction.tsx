@@ -123,12 +123,12 @@ export function QuickAddTransaction({ onSaved }: QuickAddTransactionProps) {
       <DialogTrigger asChild>
         <Button
           size="lg"
-          className="fixed bottom-24 right-4 h-16 w-16 rounded-full shadow-lg bg-blue-8n00 hover:bg-blue-900 z-50 md:hidden"
+          className="fixed bottom-24 right-4 h-16 w-16 rounded-full shadow-lg bg-blue-8n00 hover:bg-primary/90 z-50 md:hidden"
         >
           <Plus className="h-6 w-6" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="border-slate-800 bg-slate-900">
+      <DialogContent className="border-border bg-muted">
         <DialogHeader>
           <DialogTitle>Agregar Transacción Rápida</DialogTitle>
         </DialogHeader>
@@ -142,11 +142,11 @@ export function QuickAddTransaction({ onSaved }: QuickAddTransactionProps) {
                   <FormLabel>Tipo</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="bg-slate-900 border-slate-800">
+                      <SelectTrigger className="bg-muted border-border">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="border-slate-800 bg-slate-900">
+                    <SelectContent className="border-border bg-muted">
                       <SelectItem value="EXPENSE">Gasto</SelectItem>
                       <SelectItem value="INCOME">Ingreso</SelectItem>
                     </SelectContent>
@@ -164,11 +164,11 @@ export function QuickAddTransaction({ onSaved }: QuickAddTransactionProps) {
                   <FormLabel>Cuenta</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="bg-slate-900 border-slate-800">
+                      <SelectTrigger className="bg-muted border-border">
                         <SelectValue placeholder="Selecciona una cuenta" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="border-slate-800 bg-slate-900">
+                    <SelectContent className="border-border bg-muted">
                       {accounts.map((account) => (
                         <SelectItem key={account.id} value={account.id}>
                           <div className="flex items-center gap-2">
@@ -200,7 +200,7 @@ export function QuickAddTransaction({ onSaved }: QuickAddTransactionProps) {
                       placeholder="0.00"
                       value={String(field.value || "")}
                       onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
-                      className="bg-slate-900 border-slate-800"
+                      className="bg-muted border-border"
                     />
                   </FormControl>
                   <FormMessage />
@@ -218,7 +218,7 @@ export function QuickAddTransaction({ onSaved }: QuickAddTransactionProps) {
                     <Input
                       placeholder="Ej: Compra en supermercado"
                       {...field}
-                      className="bg-slate-900 border-slate-800"
+                      className="bg-muted border-border"
                     />
                   </FormControl>
                   <FormMessage />
@@ -231,14 +231,13 @@ export function QuickAddTransaction({ onSaved }: QuickAddTransactionProps) {
                 type="button"
                 variant="outline"
                 onClick={() => setIsOpen(false)}
-                className="border-slate-800 bg-slate-900 hover:bg-slate-800"
+                className="border-border bg-muted hover:bg-muted"
               >
                 Cancelar
               </Button>
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="bg-blue-900 hover:bg-gray-800"
               >
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Agregar

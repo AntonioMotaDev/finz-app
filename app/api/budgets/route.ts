@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db/prisma";
@@ -135,7 +136,7 @@ export async function POST(request: NextRequest) {
     console.error("Error al crear presupuesto:", error);
     if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { error: "Datos inválidos", details: error },
+        { error: "Datos inválidos", details: error instanceof z.ZodError ? error.issues : undefined },
         { status: 400 }
       );
     }

@@ -78,7 +78,7 @@ export function DateRangeSelector({ type, currentDate, onDateChange }: DateRange
         variant="outline"
         size="sm"
         onClick={handlePrevious}
-        className="h-9 bg-slate-900 border-slate-800 hover:bg-slate-800"
+        className="h-9 bg-muted border-border hover:bg-muted"
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
@@ -92,7 +92,7 @@ export function DateRangeSelector({ type, currentDate, onDateChange }: DateRange
         size="sm"
         onClick={handleNext}
         disabled={!canGoNext}
-        className="h-9 bg-slate-900 border-slate-800 hover:bg-slate-800 disabled:opacity-50"
+        className="h-9 bg-muted border-border hover:bg-muted disabled:opacity-50"
       >
         <ChevronRight className="h-4 w-4" />
       </Button>

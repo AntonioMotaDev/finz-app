@@ -119,7 +119,7 @@ export function TransactionFilters({
                 applyFilters();
               }
             }}
-            className="pl-10 bg-slate-900 border-slate-800 focus:border-blue-500"
+            className="pl-10 bg-muted border-border focus:border-ring"
           />
         </div>
 
@@ -127,7 +127,7 @@ export function TransactionFilters({
           <Button
             variant="outline"
             onClick={() => setIsOpen(!isOpen)}
-            className={`border-slate-800 bg-slate-900 hover:bg-slate-800 ${
+            className={`border-border bg-muted hover:bg-muted ${
               activeFiltersCount > 0 ? "border-blue-500" : ""
             }`}
           >
@@ -145,7 +145,7 @@ export function TransactionFilters({
               variant="ghost"
               size="icon"
               onClick={clearFilters}
-              className="hover:bg-slate-800"
+              className="hover:bg-muted"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -155,7 +155,7 @@ export function TransactionFilters({
 
       {/* Panel de filtros expandible */}
       {isOpen && (
-        <div className="border border-slate-800 rounded-lg p-4 bg-slate-900/50 space-y-4">
+        <div className="border border-border rounded-lg p-4 bg-muted/50 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Tipo de transacción */}
             <div className="space-y-2">
@@ -164,10 +164,10 @@ export function TransactionFilters({
                 value={filters.type || "all"}
                 onValueChange={(value) => handleFilterChange("type", value === "all" ? "" : value)}
               >
-                <SelectTrigger className="bg-slate-900 border-slate-800">
+                <SelectTrigger className="bg-muted border-border">
                   <SelectValue placeholder="Todos los tipos" />
                 </SelectTrigger>
-                <SelectContent className="border-slate-800 bg-slate-900">
+                <SelectContent className="border-border bg-muted">
                   <SelectItem value="all">Todos los tipos</SelectItem>
                   {Object.entries(transactionTypeLabels).map(([value, label]) => (
                     <SelectItem key={value} value={value}>
@@ -185,10 +185,10 @@ export function TransactionFilters({
                 value={filters.accountId || "all"}
                 onValueChange={(value) => handleFilterChange("accountId", value === "all" ? "" : value)}
               >
-                <SelectTrigger className="bg-slate-900 border-slate-800">
+                <SelectTrigger className="bg-muted border-border">
                   <SelectValue placeholder="Todas las cuentas" />
                 </SelectTrigger>
-                <SelectContent className="border-slate-800 bg-slate-900">
+                <SelectContent className="border-border bg-muted">
                   <SelectItem value="all">Todas las cuentas</SelectItem>
                   {accounts.map((account) => (
                     <SelectItem key={account.id} value={account.id}>
@@ -212,10 +212,10 @@ export function TransactionFilters({
                 value={filters.categoryId || "all"}
                 onValueChange={(value) => handleFilterChange("categoryId", value === "all" ? "" : value)}
               >
-                <SelectTrigger className="bg-slate-900 border-slate-800">
+                <SelectTrigger className="bg-muted border-border">
                   <SelectValue placeholder="Todas las categorías" />
                 </SelectTrigger>
-                <SelectContent className="border-slate-800 bg-slate-900">
+                <SelectContent className="border-border bg-muted">
                   <SelectItem value="all">Todas las categorías</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
@@ -239,7 +239,7 @@ export function TransactionFilters({
                 type="date"
                 value={filters.startDate}
                 onChange={(e) => handleFilterChange("startDate", e.target.value)}
-                className="bg-slate-900 border-slate-800"
+                className="bg-muted border-border"
               />
             </div>
 
@@ -250,7 +250,7 @@ export function TransactionFilters({
                 type="date"
                 value={filters.endDate}
                 onChange={(e) => handleFilterChange("endDate", e.target.value)}
-                className="bg-slate-900 border-slate-800"
+                className="bg-muted border-border"
               />
             </div>
 
@@ -263,7 +263,7 @@ export function TransactionFilters({
                 placeholder="0.00"
                 value={filters.minAmount}
                 onChange={(e) => handleFilterChange("minAmount", e.target.value)}
-                className="bg-slate-900 border-slate-800"
+                className="bg-muted border-border"
               />
             </div>
 
@@ -276,7 +276,7 @@ export function TransactionFilters({
                 placeholder="0.00"
                 value={filters.maxAmount}
                 onChange={(e) => handleFilterChange("maxAmount", e.target.value)}
-                className="bg-slate-900 border-slate-800"
+                className="bg-muted border-border"
               />
             </div>
           </div>
@@ -285,13 +285,12 @@ export function TransactionFilters({
             <Button
               variant="outline"
               onClick={clearFilters}
-              className="border-slate-800 bg-slate-900 hover:bg-slate-800"
+              className="border-border bg-muted hover:bg-muted"
             >
               Limpiar
             </Button>
             <Button
               onClick={applyFilters}
-              className="bg-blue-900 hover:bg-gray-800"
             >
               Aplicar Filtros
             </Button>

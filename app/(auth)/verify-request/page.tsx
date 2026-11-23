@@ -1,32 +1,21 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import type { Metadata } from "next"
 import { Mail } from "lucide-react"
+
+export const metadata: Metadata = { title: "Revisa tu correo" }
 
 export default function VerifyRequestPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <div className="flex items-center justify-center mb-4">
-            <div className="rounded-full bg-blue-100 dark:bg-blue-900/20 p-3">
-              <Mail className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-            </div>
-          </div>
-          <CardTitle className="text-2xl font-bold text-center">
-            Revisa tu correo
-          </CardTitle>
-          <CardDescription className="text-center">
-            Te hemos enviado un enlace de inicio de sesión a tu correo electrónico.
-            Haz clic en el enlace para acceder a tu cuenta.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="rounded-lg bg-muted p-4">
-            <p className="text-sm text-muted-foreground text-center">
-              El enlace es válido por 24 horas. Si no ves el correo, revisa tu carpeta de spam.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="rounded-[2rem] bg-card p-6 text-center shadow-sm ring-1 ring-border sm:p-8">
+      <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand-soft-foreground">
+        <Mail className="h-6 w-6" aria-hidden />
+      </div>
+      <h1 className="text-2xl font-bold tracking-tight">Revisa tu correo</h1>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Te hemos enviado un enlace de inicio de sesión. Haz clic en él para acceder a tu cuenta.
+      </p>
+      <p className="mt-6 rounded-2xl bg-muted p-4 text-sm text-muted-foreground">
+        El enlace es válido por 24 horas. Si no ves el correo, revisa tu carpeta de spam.
+      </p>
     </div>
   )
 }

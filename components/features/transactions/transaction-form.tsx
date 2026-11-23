@@ -409,7 +409,7 @@ export function TransactionForm({ transaction, onSaved, onCancel }: TransactionF
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="border-slate-800 bg-slate-900 hover:bg-slate-800 hover:text-slate-100"
+              className="border-border bg-muted hover:bg-muted hover:text-foreground"
             >
               Cancelar
             </Button>
@@ -417,7 +417,6 @@ export function TransactionForm({ transaction, onSaved, onCancel }: TransactionF
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-blue-900 hover:bg-gray-800"
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {transaction ? "Actualizar" : "Crear"} Transacción

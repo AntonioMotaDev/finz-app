@@ -115,7 +115,7 @@ export function CategoryManagement() {
 
   if (isLoading) {
     return (
-      <Card className="border border-slate-800">
+      <Card className="border border-border">
         <CardContent className="flex h-48 items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </CardContent>
@@ -125,7 +125,7 @@ export function CategoryManagement() {
 
   return (
     <>
-      <Card className="border border-slate-800">
+      <Card className="border border-border">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -137,7 +137,6 @@ export function CategoryManagement() {
             <Button
               size="sm"
               onClick={() => setDialogOpen(true)}
-              className="bg-blue-900 hover:bg-gray-800"
             >
               <Plus className="mr-2 h-4 w-4" />
               Nueva Categoría
@@ -156,7 +155,7 @@ export function CategoryManagement() {
               {expenseCategories.map((category) => (
                 <div
                   key={category.id}
-                  className="flex items-center justify-between rounded-lg border border-slate-700 p-3 hover:bg-accent/50 transition-colors"
+                  className="flex items-center justify-between rounded-lg border border-border p-3 hover:bg-accent/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex-shrink-0">
@@ -171,7 +170,7 @@ export function CategoryManagement() {
                       )}
                     </div>
                     {category.isDefault && (
-                      <Badge variant="outline" className="text-xs text-gray-500">
+                      <Badge variant="outline" className="text-xs text-muted-foreground">
                         Predeterminada
                       </Badge>
                     )}
@@ -215,7 +214,7 @@ export function CategoryManagement() {
               {incomeCategories.map((category) => (
                 <div
                   key={category.id}
-                  className="flex items-center justify-between rounded-lg border border-slate-700 p-3 hover:bg-accent/50 transition-colors"
+                  className="flex items-center justify-between rounded-lg border border-border p-3 hover:bg-accent/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex-shrink-0">
@@ -230,7 +229,7 @@ export function CategoryManagement() {
                       )}
                     </div>
                     {category.isDefault && (
-                      <Badge variant="outline" className="text-xs text-gray-500">
+                      <Badge variant="outline" className="text-xs text-muted-foreground">
                         Predeterminada 
                       </Badge>
                     )}

@@ -181,7 +181,7 @@ export function GoalsPageClient() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6 p-6 md:p-8 lg:p-10">
+      <div className="space-y-6 px-4 pt-6 sm:px-6 lg:px-10 lg:pt-8">
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
@@ -190,7 +190,7 @@ export function GoalsPageClient() {
   }
 
   return (
-    <div className="space-y-6 p-6 md:p-8 lg:p-10">
+    <div className="space-y-6 px-4 pt-6 sm:px-6 lg:px-10 lg:pt-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -199,7 +199,7 @@ export function GoalsPageClient() {
             Establece y alcanza tus objetivos financieros
           </p>
         </div>
-        <Button className="bg-blue-900 hover:bg-gray-800" onClick={openCreateDialog} size="lg">
+        <Button onClick={openCreateDialog} size="lg">
           <Plus className="mr-2 h-4 w-4" />
           Nueva Meta
         </Button>
@@ -208,7 +208,7 @@ export function GoalsPageClient() {
       {/* Summary Stats */}
       {goals.length > 0 && (
         <div className="grid gap-4 md:grid-cols-4">
-          <div className="rounded-lg border border-slate-800 bg-card p-6">
+          <div className="rounded-lg border border-border bg-card p-6">
             <div className="flex items-center gap-2 text-muted-foreground mb-2">
               <Target className="h-4 w-4" />
               <span className="text-sm font-medium">Metas Activas</span>
@@ -216,7 +216,7 @@ export function GoalsPageClient() {
             <p className="text-2xl font-bold">{activeGoals.length}</p>
           </div>
 
-          <div className="rounded-lg border border-slate-800 bg-card p-6">
+          <div className="rounded-lg border border-border bg-card p-6">
             <div className="flex items-center gap-2 text-muted-foreground mb-2">
               <CheckCircle2 className="h-4 w-4" />
               <span className="text-sm font-medium">Completadas</span>
@@ -226,7 +226,7 @@ export function GoalsPageClient() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-slate-800 bg-card p-6">
+          <div className="rounded-lg border border-border bg-card p-6">
             <div className="flex items-center gap-2 text-muted-foreground mb-2">
               <TrendingUp className="h-4 w-4" />
               <span className="text-sm font-medium">Total Ahorrado</span>
@@ -234,7 +234,7 @@ export function GoalsPageClient() {
             <p className="text-2xl font-bold">{formatCurrency(totalSaved)}</p>
           </div>
 
-          <div className="rounded-lg border border-slate-800 bg-card p-6">
+          <div className="rounded-lg border border-border bg-card p-6">
             <div className="flex items-center gap-2 text-muted-foreground mb-2">
               <AlertCircle className="h-4 w-4" />
               <span className="text-sm font-medium">Progreso General</span>

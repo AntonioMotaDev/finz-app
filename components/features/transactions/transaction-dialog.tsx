@@ -18,7 +18,7 @@ export function TransactionDialog({
 }: TransactionDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-slate-800 bg-slate-900 max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="border-border bg-muted max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {transaction ? "Editar Transacción" : "Nueva Transacción"}

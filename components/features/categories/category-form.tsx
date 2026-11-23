@@ -169,7 +169,7 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
                   onClick={() => setSelectedColor(color)}
                   className={`
                     relative h-12 rounded-lg border-2 transition-all hover:scale-105
-                    ${selectedColor === color ? "border-white scale-105" : "border-slate-700"}
+                    ${selectedColor === color ? "border-white scale-105" : "border-border"}
                   `}
                   style={{ backgroundColor: color }}
                 >
@@ -197,7 +197,7 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
             onChange={(e) => setIconSearch(e.target.value)}
             className="mb-2"
           />
-          <ScrollArea className="h-48 border border-slate-800 rounded-lg p-2">
+          <ScrollArea className="h-48 border border-border rounded-lg p-2">
             <div className="grid grid-cols-6 gap-2">
               {filteredIcons.map((iconData) => {
                 const IconComponent = (Icons as any)[iconData.value] || Icons.Tag;
@@ -213,7 +213,7 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
                       ${
                         isSelected
                           ? "border-blue-500 bg-blue-500/20 scale-105"
-                          : "border-slate-700 hover:border-slate-600 bg-slate-900/50"
+                          : "border-border hover:border-primary/40 bg-muted/50"
                       }
                     `}
                     title={iconData.label}
@@ -261,7 +261,7 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="border-slate-800 bg-slate-900 hover:bg-slate-800 hover:text-slate-100"
+              className="border-border bg-muted hover:bg-muted hover:text-foreground"
             >
               Cancelar
             </Button>
@@ -269,7 +269,6 @@ export function CategoryForm({ category, onSaved, onCancel }: CategoryFormProps)
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-blue-900 hover:bg-gray-800"
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {category ? "Actualizar" : "Crear"} Categoría

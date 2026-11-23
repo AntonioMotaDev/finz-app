@@ -1,75 +1,182 @@
 @import "tailwindcss";
 
+/* Modo oscuro por clase (next-themes añade .dark en <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /**
- * Tech Business Design System
- * Paleta: Slate (grises) + Blue (azul) para acciones
+ * Finz Design System
+ * Inspirado en un dashboard "soft fintech": superficies claras redondeadas,
+ * elementos "ink" (grafito) de alto contraste y un acento azul suave.
+ * Todos los colores son tokens: los componentes nunca usan colores fijos,
+ * así el modo claro/oscuro funciona en toda la app.
  */
 
 :root {
-  /* Backgrounds */
-  --background: #0F172A; /* slate-950 */
-  --foreground: #f1f5f9; /* slate-100 */
-  
-  /* UI Elements */
-  --card: #0f172a; /* slate-900 */
-  --card-foreground: #f1f5f9; /* slate-100 */
-  
-  --popover: #020617; /* slate-950 */
-  --popover-foreground: #f1f5f9; /* slate-100 */
-  
-  /* Brand Colors */
-  --primary: #1e40af; /* blue-900 */
+  color-scheme: light;
+
+  /* Superficies */
+  --background: #eef1f6;        /* lienzo general */
+  --foreground: #1c1d21;
+  --card: #ffffff;
+  --card-foreground: #1c1d21;
+  --popover: #ffffff;
+  --popover-foreground: #1c1d21;
+  --surface: #f6f7f9;           /* panel interno (marco de contenido) */
+
+  /* "Ink": bloques oscuros destacados (sidebar, tarjeta principal, iconos) */
+  --ink: #2b2c31;
+  --ink-foreground: #ffffff;
+
+  /* Acción principal (azul) */
+  --primary: #3f74d6;
   --primary-foreground: #ffffff;
-  
-  --secondary: #1e293b; /* slate-800 */
-  --secondary-foreground: #f1f5f9; /* slate-100 */
-  
-  /* Status Colors */
-  --muted: #334155; /* slate-700 */
-  --muted-foreground: #94a3b8; /* slate-400 */
-  
-  --accent: #1e293b; /* slate-800 */
-  --accent-foreground: #f1f5f9; /* slate-100 */
-  
-  --destructive: #f43f5e; /* rose-500 */
+  --brand-soft: #a6c4f4;        /* azul suave: tiles, donut, acentos */
+  --brand-soft-foreground: #13294b;
+
+  --secondary: #eceef2;
+  --secondary-foreground: #1c1d21;
+  --muted: #f1f2f5;
+  --muted-foreground: #6b7079;
+  --accent: #eceef2;
+  --accent-foreground: #1c1d21;
+
+  /* Estados */
+  --success: #15803d;
+  --success-soft: #dcf2e1;
+  --danger: #dc2626;
+  --danger-soft: #fde2e2;
+  --info: #0e7490;
+  --warning: #b45309;
+  --warning-soft: #fdf0d8;
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  
-  /* Borders */
-  --border: #1e293b; /* slate-800 */
-  --input: #1e293b; /* slate-800 */
-  --ring: #2563eb; /* blue-600 */
-  
-  /* Radius */
-  --radius: 0.75rem;
+
+  --border: #e3e6eb;
+  --input: #e3e6eb;
+  --ring: #3f74d6;
+
+  /* Gráficas */
+  --chart-grid: #e7e9ee;
+  --chart-axis: #8a8f98;
+  --chart-2: #2b2c31;
+
+  --radius: 1rem;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  font-feature-settings: "rlig" 1, "calt" 1;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.dark {
+  color-scheme: dark;
+
+  --background: #0b0c0f;
+  --foreground: #f2f3f5;
+  --card: #16171b;
+  --card-foreground: #f2f3f5;
+  --popover: #1b1c21;
+  --popover-foreground: #f2f3f5;
+  --surface: #111215;
+
+  --ink: #23252b;
+  --ink-foreground: #ffffff;
+
+  --primary: #6f9cf0;
+  --primary-foreground: #0b1730;
+  --brand-soft: #4d6fa8;
+  --brand-soft-foreground: #ffffff;
+
+  --secondary: #202228;
+  --secondary-foreground: #f2f3f5;
+  --muted: #1e2025;
+  --muted-foreground: #9aa0aa;
+  --accent: #23252b;
+  --accent-foreground: #f2f3f5;
+
+  --success: #4ade80;
+  --success-soft: rgba(74, 222, 128, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --info: #22d3ee;
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.14);
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --border: #26282e;
+  --input: #2a2c33;
+  --ring: #6f9cf0;
+
+  --chart-grid: #24262c;
+  --chart-axis: #7d838d;
+  --chart-2: #d4d8df;
 }
 
-/* Scrollbar personalizado */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+/* Exponer tokens como utilidades de Tailwind (bg-card, text-success, ...) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-soft-foreground: var(--brand-soft-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 14px);
 }
 
-::-webkit-scrollbar-track {
-  background: #0f172a; /* slate-900 */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "rlig" 1, "calt" 1, "tnum" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #334155; /* slate-700 */
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #475569; /* slate-600 */
+/* Scrollbar discreto que respeta el tema */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--muted-foreground) 40%, transparent) transparent;
 }
 
 /* Safe area para dispositivos con notch (iOS, Android modernos) */
@@ -81,7 +188,30 @@ body {
 
 /* Mejorar tap targets en móviles */
 @media (hover: none) and (pointer: coarse) {
-  button, a {
-    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
+  button,
+  a {
+    -webkit-tap-highlight-color: color-mix(in srgb, var(--primary) 12%, transparent);
   }
+}
+
+/* Respetar preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Textura de puntos (mapa) para tarjetas de saldo, sólo CSS: 0 KB de imagen */
+.card-dots {
+  background-image: radial-gradient(
+    color-mix(in srgb, currentColor 14%, transparent) 1px,
+    transparent 1.2px
+  );
+  background-size: 9px 9px;
+  mask-image: radial-gradient(ellipse 60% 70% at 70% 45%, #000 30%, transparent 75%);
 }

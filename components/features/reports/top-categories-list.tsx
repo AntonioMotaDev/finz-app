@@ -23,12 +23,12 @@ interface TopCategoriesListProps {
 export function TopCategoriesList({ categories }: TopCategoriesListProps) {
   if (!categories || categories.length === 0) {
     return (
-      <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+      <Card className="border-border bg-card">
         <CardHeader>
           <CardTitle className="text-lg">Top Categorías</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-slate-400 text-center py-8">
+          <p className="text-sm text-muted-foreground text-center py-8">
             No hay datos de categorías disponibles
           </p>
         </CardContent>
@@ -37,7 +37,7 @@ export function TopCategoriesList({ categories }: TopCategoriesListProps) {
   }
 
   return (
-    <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+    <Card className="border-border bg-card">
       <CardHeader>
         <CardTitle className="text-lg">Top Categorías de Gastos</CardTitle>
       </CardHeader>
@@ -50,11 +50,11 @@ export function TopCategoriesList({ categories }: TopCategoriesListProps) {
                   className="h-3 w-3 rounded-full"
                   style={{ backgroundColor: category.color }}
                 />
-                <span className="text-sm font-medium text-slate-200">
+                <span className="text-sm font-medium text-foreground">
                   {category.name}
                 </span>
               </div>
-              <span className="text-sm font-bold text-slate-100">
+              <span className="text-sm font-bold text-foreground">
                 ${category.amount.toLocaleString("es-MX", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -69,7 +69,7 @@ export function TopCategoriesList({ categories }: TopCategoriesListProps) {
                   ["--progress-background" as any]: category.color,
                 } as React.CSSProperties}
               />
-              <span className="text-xs text-slate-400 min-w-[45px] text-right">
+              <span className="text-xs text-muted-foreground min-w-[45px] text-right">
                 {category.percentage.toFixed(1)}%
               </span>
             </div>

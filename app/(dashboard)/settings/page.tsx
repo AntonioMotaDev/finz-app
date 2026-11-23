@@ -55,7 +55,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6 p-4 md:p-6 lg:p-8">
+    <div className="space-y-6 px-4 pt-6 sm:px-6 lg:px-10 lg:pt-8">
       {/* Header */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-3">
@@ -70,19 +70,19 @@ export default function SettingsPage() {
       {/* Tabs */}
       <Tabs defaultValue="profile" className="space-y-6">
         <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
-          <TabsTrigger value="profile" className="gap-2 hover:bg-slate-200 dark:hover:bg-slate-800">
+          <TabsTrigger value="profile" className="gap-2 hover:bg-muted">
             <User className="h-4 w-4" />
             <span className="hidden sm:inline">Perfil</span>
           </TabsTrigger>
-          <TabsTrigger value="categories" className="gap-2 hover:bg-slate-200 dark:hover:bg-slate-800">
+          <TabsTrigger value="categories" className="gap-2 hover:bg-muted">
             <Tag className="h-4 w-4" />
             <span className="hidden sm:inline">Categorías</span>
           </TabsTrigger>
-          <TabsTrigger value="data" className="gap-2 hover:bg-slate-200 dark:hover:bg-slate-800">
+          <TabsTrigger value="data" className="gap-2 hover:bg-muted">
             <Database className="h-4 w-4" />
             <span className="hidden sm:inline">Datos</span>
           </TabsTrigger>
-          <TabsTrigger value="danger" className="gap-2 hover:bg-slate-200 dark:hover:bg-slate-800">
+          <TabsTrigger value="danger" className="gap-2 hover:bg-muted">
             <AlertTriangle className="h-4 w-4" />
             <span className="hidden sm:inline">Avanzado</span>
           </TabsTrigger>

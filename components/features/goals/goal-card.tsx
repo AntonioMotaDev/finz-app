@@ -79,7 +79,7 @@ export function GoalCard({ goal, onEdit, onDelete, onContribute }: GoalCardProps
   return (
     <>
       <Card
-        className={`relative border border-slate-600 overflow-hidden transition-all hover:shadow-md ${
+        className={`relative border border-border overflow-hidden transition-all hover:shadow-md ${
           goal.isCompleted ? "border-green-200 bg-green-50/50" : ""
         } ${isOverdue ? "border-red-200 bg-red-50/50" : ""}`}
       >
@@ -220,7 +220,7 @@ export function GoalCard({ goal, onEdit, onDelete, onContribute }: GoalCardProps
           {!goal.isCompleted && (
             <Button
               onClick={() => onContribute(goal)}
-              className="w-full bg-blue-900 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 text-white"
+              className="w-full"
               size="lg"
             >
               <Plus className="mr-2 h-4 w-4" />

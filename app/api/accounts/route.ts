@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 
     if (error.name === "ZodError") {
       return NextResponse.json(
-        { error: "Datos inválidos", details: error.errors },
+        { error: "Datos inválidos", details: error.issues },
         { status: 400 }
       );
     }

@@ -22,25 +22,25 @@ export function AccountsDistributionChart({ data }: Props) {
     if (active && payload && payload.length) {
       const item = payload[0].payload;
       return (
-        <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 shadow-xl">
-          <p className="text-sm font-medium text-slate-300 mb-2">{item.name}</p>
+        <div className="rounded-lg border border-border bg-background p-3 shadow-xl">
+          <p className="text-sm font-medium text-foreground/80 mb-2">{item.name}</p>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400">Tipo:</span>
-              <span className="text-xs font-medium text-slate-200">
+              <span className="text-xs text-muted-foreground">Tipo:</span>
+              <span className="text-xs font-medium text-foreground">
                 {accountTypeLabels[item.type as keyof typeof accountTypeLabels] || item.type}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400">Balance:</span>
-              <span className="text-xs font-medium text-slate-200">
+              <span className="text-xs text-muted-foreground">Balance:</span>
+              <span className="text-xs font-medium text-foreground">
                 ${item.balance.toLocaleString("es-MX", {
                   minimumFractionDigits: 2,
                 })}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-muted-foreground">
                 {item.percentage.toFixed(1)}% del total
               </span>
             </div>
@@ -61,12 +61,12 @@ export function AccountsDistributionChart({ data }: Props) {
 
   if (!data || data.length === 0) {
     return (
-      <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+      <Card className="border-border bg-card">
         <CardHeader>
           <CardTitle className="text-lg">Distribución por Cuenta</CardTitle>
         </CardHeader>
         <CardContent className="h-[300px] flex items-center justify-center">
-          <p className="text-sm text-slate-400">No hay cuentas con balance</p>
+          <p className="text-sm text-muted-foreground">No hay cuentas con balance</p>
         </CardContent>
       </Card>
     );
@@ -75,10 +75,10 @@ export function AccountsDistributionChart({ data }: Props) {
   const totalBalance = data.reduce((sum, acc) => sum + acc.balance, 0);
 
   return (
-    <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+    <Card className="border-border bg-card">
       <CardHeader>
         <CardTitle className="text-lg">Distribución por Cuenta</CardTitle>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-muted-foreground">
           Total: ${totalBalance.toLocaleString("es-MX", { minimumFractionDigits: 2 })}
         </p>
       </CardHeader>
@@ -87,7 +87,7 @@ export function AccountsDistributionChart({ data }: Props) {
           <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
             <XAxis
               dataKey="name"
-              stroke="#64748b"
+              stroke="var(--chart-axis)"
               fontSize={11}
               tickLine={false}
               axisLine={false}
@@ -96,7 +96,7 @@ export function AccountsDistributionChart({ data }: Props) {
               height={80}
             />
             <YAxis
-              stroke="#64748b"
+              stroke="var(--chart-axis)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
@@ -116,16 +116,16 @@ export function AccountsDistributionChart({ data }: Props) {
           {data.map((account, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-900/50 transition-colors"
+              className="flex items-center justify-between p-2 rounded-lg hover:bg-muted transition-colors"
             >
               <div className="flex items-center gap-2 flex-1 min-w-0">
                 <div
                   className="h-3 w-3 rounded-full flex-shrink-0"
                   style={{ backgroundColor: account.color }}
                 />
-                <span className="text-xs text-slate-300 truncate">{account.name}</span>
+                <span className="text-xs text-foreground/80 truncate">{account.name}</span>
               </div>
-              <span className="text-xs font-medium text-slate-200 flex-shrink-0 ml-2">
+              <span className="text-xs font-medium text-foreground flex-shrink-0 ml-2">
                 {account.percentage.toFixed(1)}%
               </span>
             </div>

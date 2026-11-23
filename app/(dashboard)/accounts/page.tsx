@@ -108,7 +108,7 @@ export default function AccountsPage() {
   const totalBalance = accounts.reduce((sum, account) => sum + Number(account.balance), 0);
 
   return (
-    <div className="space-y-8 p-6 md:p-8 lg:p-10">
+    <div className="space-y-8 px-4 pt-6 sm:px-6 lg:px-10 lg:pt-8">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -119,7 +119,6 @@ export default function AccountsPage() {
         </div>
         <Button 
           onClick={() => setIsDialogOpen(true)}
-          className="bg-blue-900 hover:bg-gray-800"
         >
           <Plus className="mr-2 h-4 w-4" />
           Nueva Cuenta
@@ -127,27 +126,28 @@ export default function AccountsPage() {
       </div>
 
       {/* Balance Total */}
-      <div className="rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950 p-6">
-        <p className="text-sm text-slate-400">Balance Total</p>
+      <div className="relative isolate overflow-hidden rounded-3xl bg-ink p-6 text-ink-foreground shadow-sm dark:bg-gradient-to-br dark:from-[#2d3a55] dark:to-[#1b2233]">
+        <div aria-hidden className="card-dots absolute inset-0 -z-10" />
+        <p className="text-sm text-white/70">Balance Total</p>
         <p className="text-4xl font-bold tracking-tight mt-2">
           ${totalBalance.toLocaleString("es-MX", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}
         </p>
-        <p className="text-sm text-slate-500 mt-2">
+        <p className="text-sm text-white/70 mt-2">
           {accounts.length} {accounts.length === 1 ? "cuenta" : "cuentas"}
         </p>
       </div>
 
       {/* Filtros */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 text-slate-400">
+        <div className="flex items-center gap-2 text-muted-foreground">
           <Filter className="h-4 w-4" />
           <span className="text-sm font-medium">Filtros:</span>
         </div>
         <Select value={filterType} onValueChange={setFilterType}>
-          <SelectTrigger className="w-[200px] border-slate-800 bg-slate-950 hover:border-slate-700">
+          <SelectTrigger className="w-[200px] border-border bg-background hover:border-primary/40">
             <SelectValue placeholder="Tipo de cuenta" />
           </SelectTrigger>
           <SelectContent>
@@ -161,7 +161,7 @@ export default function AccountsPage() {
         </Select>
 
         <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-[180px] border-slate-800 bg-slate-950 hover:border-slate-700">
+          <SelectTrigger className="w-[180px] border-border bg-background hover:border-primary/40">
             <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>
@@ -191,17 +191,17 @@ export default function AccountsPage() {
 
       {/* Accounts Grid */}
       {!loading && accounts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-center border border-dashed border-slate-800 rounded-xl">
-          <div className="rounded-full bg-slate-900 p-4 mb-4">
-            <Plus className="h-8 w-8 text-slate-400" />
+        <div className="flex flex-col items-center justify-center py-16 text-center border border-dashed border-border rounded-xl">
+          <div className="rounded-full bg-muted p-4 mb-4">
+            <Plus className="h-8 w-8 text-muted-foreground" />
           </div>
           <p className="text-lg font-medium">No hay cuentas</p>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Comienza creando tu primera cuenta financiera
           </p>
           <Button 
             onClick={() => setIsDialogOpen(true)} 
-            className="mt-6 bg-blue-600 hover:bg-blue-700"
+            className="mt-6"
           >
             <Plus className="mr-2 h-4 w-4" />
             Crear Cuenta

@@ -52,7 +52,7 @@ export function DataManagement() {
 
   return (
     <>
-      <Card className="border border-slate-800">
+      <Card className="border border-border">
         <CardHeader>
           <CardTitle>Gestión de Datos</CardTitle>
           <CardDescription>
@@ -61,7 +61,7 @@ export function DataManagement() {
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Exportar Datos */}
-          <div className="rounded-lg border border-slate-700 p-4 space-y-3">
+          <div className="rounded-lg border border-border p-4 space-y-3">
             <div className="flex items-start gap-3">
               <Download className="h-5 w-5 text-blue-600 mt-0.5" />
               <div className="flex-1 space-y-1">
@@ -76,7 +76,7 @@ export function DataManagement() {
                 size="sm"
                 onClick={() => setExportFormat("json")}
                 disabled={isExporting}
-                className="flex-1 bg-blue-900 hover:bg-gray-800"
+                className="flex-1"
               >
                 <FileJson className="mr-2 h-4 w-4" />
                 Exportar JSON
@@ -85,7 +85,7 @@ export function DataManagement() {
                 size="sm"
                 onClick={() => setExportFormat("csv")}
                 disabled={isExporting}
-                className="flex-1 bg-blue-900 hover:bg-gray-800"
+                className="flex-1"
               >
                 <FileSpreadsheet className="mr-2 h-4 w-4" />
                 Exportar CSV
@@ -111,7 +111,6 @@ export function DataManagement() {
             <AlertDialogAction
               onClick={() => exportFormat && handleExport(exportFormat)}
               disabled={isExporting}
-              className="bg-blue-900 hover:bg-gray-800"
             >
               {isExporting ? (
                 <>
