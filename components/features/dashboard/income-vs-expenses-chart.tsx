@@ -1,15 +1,15 @@
 "use client";
 
 import {
-  Area,
-  AreaChart,
+  Bar,
+  BarChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn, formatCurrency } from "@/lib/utils";
 
 interface MonthData {
   month: string;
@@ -22,137 +22,100 @@ interface Props {
   data: MonthData[];
 }
 
-export function IncomeVsExpensesChart({ data }: Props) {
-  // Formatear valores para el eje Y
-  const formatYAxis = (value: number) => {
-    if (value >= 1000) {
-      return `$${(value / 1000).toFixed(0)}k`;
-    }
-    return `$${value}`;
-  };
+const series = [
+  { key: "income", label: "Ingresos", color: "var(--brand-soft)" },
+  { key: "expenses", label: "Gastos", color: "var(--chart-2)" },
+] as const;
 
-  // Custom tooltip
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 shadow-xl">
-          <p className="text-sm font-medium text-slate-300 mb-2">
-            {payload[0].payload.month}
-          </p>
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-emerald-400" />
-              <span className="text-xs text-slate-400">Ingresos:</span>
-              <span className="text-xs font-medium text-emerald-400">
-                ${payload[0].value.toLocaleString("es-MX", {
-                  minimumFractionDigits: 2,
-                })}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-rose-400" />
-              <span className="text-xs text-slate-400">Gastos:</span>
-              <span className="text-xs font-medium text-rose-400">
-                ${payload[1].value.toLocaleString("es-MX", {
-                  minimumFractionDigits: 2,
-                })}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 pt-1 border-t border-slate-800">
-              <div className="h-2 w-2 rounded-full bg-cyan-400" />
-              <span className="text-xs text-slate-400">Ahorro:</span>
-              <span className="text-xs font-medium text-cyan-400">
-                ${payload[2].value.toLocaleString("es-MX", {
-                  minimumFractionDigits: 2,
-                })}
-              </span>
-            </div>
+const formatYAxis = (value: number) =>
+  Math.abs(value) >= 1000 ? `$${(value / 1000).toFixed(0)}k` : `$${value}`;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function ChartTooltip({ active, payload }: any) {
+  if (!active || !payload?.length) return null;
+  const row = payload[0].payload as MonthData;
+  return (
+    <div className="rounded-xl bg-popover p-3 text-popover-foreground shadow-xl ring-1 ring-border">
+      <p className="mb-2 text-sm font-semibold capitalize">{row.month}</p>
+      <dl className="space-y-1 text-xs">
+        {series.map((s) => (
+          <div key={s.key} className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: s.color }} />
+            <dt className="text-muted-foreground">{s.label}:</dt>
+            <dd className="ml-auto font-semibold tabular-nums">{formatCurrency(row[s.key])}</dd>
           </div>
+        ))}
+        <div className="flex items-center gap-2 border-t border-border pt-1">
+          <dt className="text-muted-foreground">Ahorro:</dt>
+          <dd
+            className={cn(
+              "ml-auto font-semibold tabular-nums",
+              row.savings < 0 ? "text-danger" : "text-success"
+            )}
+          >
+            {formatCurrency(row.savings)}
+          </dd>
         </div>
-      );
-    }
-    return null;
-  };
+      </dl>
+    </div>
+  );
+}
 
-  if (!data || data.length === 0) {
-    return (
-      <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
-        <CardHeader>
-          <CardTitle className="text-lg">Ingresos vs Gastos</CardTitle>
-        </CardHeader>
-        <CardContent className="h-[300px] flex items-center justify-center">
-          <p className="text-sm text-slate-400">No hay datos disponibles</p>
-        </CardContent>
-      </Card>
-    );
-  }
+export function IncomeVsExpensesChart({ data }: Props) {
+  const empty = !data || data.every((d) => d.income === 0 && d.expenses === 0);
 
   return (
-    <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
-      <CardHeader>
-        <CardTitle className="text-lg">Ingresos vs Gastos</CardTitle>
-        <p className="text-sm text-slate-400">Últimos 6 meses</p>
-      </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-          <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-            <defs>
-              <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#34d399" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#34d399" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#fb7185" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#fb7185" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="colorSavings" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#22d3ee" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#22d3ee" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+    <section
+      aria-labelledby="ive-title"
+      className="rounded-[1.75rem] bg-card p-5 shadow-sm ring-1 ring-border sm:p-6"
+    >
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 id="ive-title" className="text-lg font-bold tracking-tight">
+            Ingresos vs gastos
+          </h2>
+          <p className="text-sm text-muted-foreground">Últimos 6 meses</p>
+        </div>
+        <ul className="flex items-center gap-4 text-xs text-muted-foreground">
+          {series.map((s) => (
+            <li key={s.key} className="flex items-center gap-1.5">
+              <span className="h-3 w-3 rounded" style={{ backgroundColor: s.color }} />
+              {s.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {empty ? (
+        <div className="flex h-[260px] items-center justify-center">
+          <p className="text-sm text-muted-foreground">No hay datos disponibles</p>
+        </div>
+      ) : (
+        <ResponsiveContainer width="100%" height={260}>
+          <BarChart data={data} barGap={6} margin={{ top: 8, right: 4, left: -8, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="4 4" stroke="var(--chart-grid)" vertical={false} />
             <XAxis
               dataKey="month"
-              stroke="#64748b"
+              stroke="var(--chart-axis)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
             />
             <YAxis
-              stroke="#64748b"
+              stroke="var(--chart-axis)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
               tickFormatter={formatYAxis}
+              width={48}
             />
-            <Tooltip content={<CustomTooltip />} />
-            <Area
-              type="monotone"
-              dataKey="income"
-              stroke="#34d399"
-              strokeWidth={2}
-              fillOpacity={1}
-              fill="url(#colorIncome)"
-            />
-            <Area
-              type="monotone"
-              dataKey="expenses"
-              stroke="#fb7185"
-              strokeWidth={2}
-              fillOpacity={1}
-              fill="url(#colorExpenses)"
-            />
-            <Area
-              type="monotone"
-              dataKey="savings"
-              stroke="#22d3ee"
-              strokeWidth={2}
-              fillOpacity={1}
-              fill="url(#colorSavings)"
-            />
-          </AreaChart>
+            <Tooltip content={<ChartTooltip />} cursor={{ fill: "var(--muted)" }} />
+            {series.map((s) => (
+              <Bar key={s.key} dataKey={s.key} fill={s.color} radius={[8, 8, 8, 8]} maxBarSize={22} />
+            ))}
+          </BarChart>
         </ResponsiveContainer>
-      </CardContent>
-    </Card>
+      )}
+    </section>
   );
 }

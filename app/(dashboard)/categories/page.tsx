@@ -71,7 +71,7 @@ export default function CategoriesPage() {
   const customCategories = filteredCategories.filter((cat) => !cat.isDefault);
 
   return (
-    <div className="flex-1 space-y-6 p-6 md:p-8">
+    <div className="space-y-6 px-4 pt-6 sm:px-6 lg:px-10 lg:pt-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -82,7 +82,6 @@ export default function CategoriesPage() {
         </div>
         <Button
           onClick={handleNewCategory}
-          className="bg-blue-900 hover:bg-gray-800"
         >
           <Plus className="h-4 w-4 mr-2" />
           Nueva Categoría
@@ -91,17 +90,17 @@ export default function CategoriesPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="border border-slate-800 rounded-lg p-4 bg-slate-900/50">
+        <div className="border border-border rounded-lg p-4 bg-muted/50">
           <p className="text-sm text-muted-foreground">Total de categorías</p>
           <p className="text-2xl font-bold mt-1">{categories.length}</p>
         </div>
-        <div className="border border-slate-800 rounded-lg p-4 bg-slate-900/50">
+        <div className="border border-border rounded-lg p-4 bg-muted/50">
           <p className="text-sm text-muted-foreground">Categorías de gastos</p>
           <p className="text-2xl font-bold mt-1 text-red-500">
             {categories.filter((c) => c.type === "EXPENSE").length}
           </p>
         </div>
-        <div className="border border-slate-800 rounded-lg p-4 bg-slate-900/50">
+        <div className="border border-border rounded-lg p-4 bg-muted/50">
           <p className="text-sm text-muted-foreground">Categorías de ingresos</p>
           <p className="text-2xl font-bold mt-1 text-green-500">
             {categories.filter((c) => c.type === "INCOME").length}
@@ -117,13 +116,13 @@ export default function CategoriesPage() {
           placeholder="Buscar categorías..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 bg-slate-900 border-slate-800 focus:border-blue-500"
+          className="pl-10 bg-muted border-border focus:border-ring"
         />
       </div>
 
       {/* Tabs por tipo */}
       <Tabs value={activeTab} onValueChange={(value: any) => setActiveTab(value)}>
-        <TabsList className="grid w-full md:w-[400px] grid-cols-2 bg-slate-900 border border-slate-800">
+        <TabsList className="grid w-full md:w-[400px] grid-cols-2 bg-muted border border-border">
           <TabsTrigger
             value="EXPENSE"
             className="data-[state=active]:bg-red-500/20 data-[state=active]:text-red-500"
@@ -261,7 +260,7 @@ export default function CategoriesPage() {
 
       {/* Dialog para crear/editar categoría */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="border-slate-800 bg-slate-900 max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="border-border bg-muted max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
               {editingCategory ? "Editar Categoría" : "Nueva Categoría"}

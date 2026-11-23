@@ -72,7 +72,7 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
   }
 
   return (
-    <Card className="border border-slate-800">
+    <Card className="border border-border">
       <CardHeader>
         <CardTitle>Información Personal</CardTitle>
         <CardDescription>
@@ -158,7 +158,7 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-blue-900 hover:bg-gray-800"
+            className="w-full"
           >
             {isLoading ? (
               <>

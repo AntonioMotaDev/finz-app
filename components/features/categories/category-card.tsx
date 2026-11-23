@@ -77,7 +77,7 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
 
   return (
     <>
-      <Card className="border-slate-800 bg-slate-900/50 hover:bg-slate-900/70 transition-colors overflow-hidden group">
+      <Card className="border-border bg-muted/50 hover:bg-muted transition-colors overflow-hidden group">
         <div className="p-4">
           {/* Header */}
           <div className="flex items-start justify-between mb-3">
@@ -120,25 +120,25 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-800"
+                    className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-muted"
                   >
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="border-slate-800 bg-slate-900"
+                  className="border-border bg-muted"
                 >
                   <DropdownMenuItem
                     onClick={() => onEdit?.(category)}
-                    className="hover:bg-slate-800 focus:bg-slate-800"
+                    className="hover:bg-muted focus:bg-muted"
                   >
                     <Pencil className="mr-2 h-4 w-4" />
                     Editar
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => setDeleteDialogOpen(true)}
-                    className="hover:bg-slate-800 focus:bg-slate-800 text-red-500 focus:text-red-500"
+                    className="hover:bg-muted focus:bg-muted text-red-500 focus:text-red-500"
                     disabled={category._count && category._count.transactions > 0}
                   >
                     <Trash2 className="mr-2 h-4 w-4" />
@@ -157,7 +157,7 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
           )}
 
           {/* Estadísticas */}
-          <div className="flex items-center justify-between pt-3 border-t border-slate-800">
+          <div className="flex items-center justify-between pt-3 border-t border-border">
             <div>
               <p className="text-xs text-muted-foreground">Transacciones</p>
               <p className="text-lg font-bold">
@@ -168,7 +168,7 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
             {category.isDefault && (
               <div className="text-right">
                 <p className="text-xs text-muted-foreground">Predeterminada</p>
-                <Badge variant="outline" className="mt-1 border-slate-700">
+                <Badge variant="outline" className="mt-1 border-border">
                   Sistema
                 </Badge>
               </div>
@@ -185,7 +185,7 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
 
       {/* Dialog de confirmación de eliminación */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent className="border-slate-800 bg-slate-900">
+        <AlertDialogContent className="border-border bg-muted">
           <AlertDialogHeader>
             <AlertDialogTitle>¿Eliminar categoría?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -202,7 +202,7 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
           <AlertDialogFooter>
             <AlertDialogCancel
               disabled={isDeleting}
-              className="border-slate-800 bg-slate-900 hover:bg-slate-800"
+              className="border-border bg-muted hover:bg-muted"
             >
               Cancelar
             </AlertDialogCancel>

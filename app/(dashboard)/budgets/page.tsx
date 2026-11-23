@@ -178,7 +178,7 @@ export default function BudgetsPage() {
   }
 
   return (
-    <div className="space-y-6 p-4 md:p-6 lg:p-8">
+    <div className="space-y-6 px-4 pt-6 sm:px-6 lg:px-10 lg:pt-8">
       {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
@@ -187,36 +187,36 @@ export default function BudgetsPage() {
             Gestiona tus límites de gasto por categoría
           </p>
         </div>
-        <Button className="bg-blue-900 hover:bg-gray-800"  onClick={() => setDialogOpen(true)}>
-          <Plus className="mr-2 h-4 w-4 " />
+        <Button  onClick={() => setDialogOpen(true)}>
+          <Plus className="mr-2 h-4 w-4" />
           Nuevo Presupuesto
         </Button>
       </div>
 
       {/* Stats */}
       <div className="grid gap-4 md:grid-cols-4">
-        <div className="rounded-lg border border-slate-800 bg-card p-6">
+        <div className="rounded-lg border border-border bg-card p-6">
           <div className="flex items-center gap-2">
             <Target className="h-4 w-4 text-muted-foreground" />
             <span className="text-sm font-medium text-muted-foreground">Total</span>
           </div>
           <p className="mt-2 text-3xl font-bold">{stats.total}</p>
         </div>
-        <div className="rounded-lg border border-slate-800 bg-card p-6">
+        <div className="rounded-lg border border-border bg-card p-6">
           <div className="flex items-center gap-2">
             <TrendingDown className="h-4 w-4 text-green-600" />
             <span className="text-sm font-medium text-muted-foreground">Activos</span>
           </div>
           <p className="mt-2 text-3xl font-bold text-green-600">{stats.active}</p>
         </div>
-        <div className="rounded-lg border border-slate-800 bg-card p-6">
+        <div className="rounded-lg border border-border bg-card p-6">
           <div className="flex items-center gap-2">
             <TrendingDown className="h-4 w-4 text-yellow-600" />
             <span className="text-sm font-medium text-muted-foreground">Cerca del límite</span>
           </div>
           <p className="mt-2 text-3xl font-bold text-yellow-600">{stats.warning}</p>
         </div>
-        <div className="rounded-lg border border-slate-800 bg-card p-6">
+        <div className="rounded-lg border border-border bg-card p-6">
           <div className="flex items-center gap-2">
             <TrendingDown className="h-4 w-4 text-red-600" />
             <span className="text-sm font-medium text-muted-foreground">Excedidos</span>
@@ -261,7 +261,7 @@ export default function BudgetsPage() {
                   : "Todos tus presupuestos están bajo control"}
               </p>
               {activeTab === "all" && (
-                <Button className="bg-blue-900 hover:bg-gray-800" onClick={() => setDialogOpen(true)}>
+                <Button onClick={() => setDialogOpen(true)}>
                   <Plus className="mr-2 h-4 w-4" />
                   Crear Presupuesto
                 </Button>

@@ -61,7 +61,7 @@ export function StatCard({
           {title}
         </h3>
         {icon && (
-          <div className="rounded-full bg-blue-500/10 p-2">{icon}</div>
+          <div className="rounded-full bg-primary/10 p-2">{icon}</div>
         )}
       </div>
       <div className="space-y-1">
@@ -102,8 +102,8 @@ export function EmptyState({
   action,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 text-center border border-dashed border-slate-800 rounded-xl">
-      <div className="rounded-full bg-slate-900 p-4 mb-4">{icon}</div>
+    <div className="flex flex-col items-center justify-center py-16 text-center border border-dashed border-border rounded-xl">
+      <div className="rounded-full bg-muted p-4 mb-4">{icon}</div>
       <p className="text-lg font-medium">{title}</p>
       <p className={cn(colors.textMuted, "text-sm mt-1")}>{description}</p>
       {action && <div className="mt-6">{action}</div>}
@@ -161,11 +161,11 @@ export function InfoBadge({
   variant = "default",
 }: InfoBadgeProps) {
   const variantStyles = {
-    default: "bg-slate-800 text-slate-300",
-    success: "bg-emerald-500/10 text-emerald-400",
-    error: "bg-rose-500/10 text-rose-400",
+    default: "bg-muted text-foreground/80",
+    success: "bg-success-soft text-success",
+    error: "bg-danger-soft text-danger",
     warning: "bg-amber-500/10 text-amber-400",
-    info: "bg-cyan-500/10 text-cyan-400",
+    info: "bg-info/10 text-info",
   };
 
   return (
@@ -197,16 +197,16 @@ export function GradientCard({
   gradient = "blue",
 }: GradientCardProps) {
   const gradients = {
-    blue: "from-slate-900 via-slate-900 to-blue-950",
-    purple: "from-slate-900 via-slate-900 to-purple-950",
-    cyan: "from-slate-900 via-slate-900 to-cyan-950",
-    emerald: "from-slate-900 via-slate-900 to-emerald-950",
+    blue: "from-card via-card to-blue-500/10",
+    purple: "from-card via-card to-purple-500/10",
+    cyan: "from-card via-card to-cyan-500/10",
+    emerald: "from-card via-card to-emerald-500/10",
   };
 
   return (
     <div
       className={cn(
-        "rounded-xl border border-slate-800 bg-gradient-to-br p-6",
+        "rounded-xl border border-border bg-gradient-to-br p-6",
         gradients[gradient],
         shadows.lg,
         className

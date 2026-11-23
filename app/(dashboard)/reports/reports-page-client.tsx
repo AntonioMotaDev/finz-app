@@ -110,8 +110,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={ArrowUpRight}
-            iconColor="text-emerald-400"
-            iconBgColor="bg-emerald-500/10"
+            iconColor="text-success"
+            iconBgColor="bg-success-soft"
             subtitle={`${data.transactionsCount} transacciones`}
             trend={{
               value: data.comparisonWithPrevious.incomeChange,
@@ -125,8 +125,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={ArrowDownRight}
-            iconColor="text-rose-400"
-            iconBgColor="bg-rose-500/10"
+            iconColor="text-danger"
+            iconBgColor="bg-danger-soft"
             subtitle="Esta semana"
             trend={{
               value: data.comparisonWithPrevious.expensesChange,
@@ -140,8 +140,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={TrendingUp}
-            iconColor={isSavingsPositive ? "text-cyan-400" : "text-rose-400"}
-            iconBgColor={isSavingsPositive ? "bg-cyan-500/10" : "bg-rose-500/10"}
+            iconColor={isSavingsPositive ? "text-info" : "text-danger"}
+            iconBgColor={isSavingsPositive ? "bg-info/10" : "bg-danger-soft"}
             subtitle="Ingresos - Gastos"
             trend={{
               value: savingsChange,
@@ -155,8 +155,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={DollarSign}
-            iconColor="text-blue-400"
-            iconBgColor="bg-blue-500/10"
+            iconColor="text-primary"
+            iconBgColor="bg-primary/10"
             subtitle="Por día"
           />
         </div>
@@ -198,8 +198,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={ArrowUpRight}
-            iconColor="text-emerald-400"
-            iconBgColor="bg-emerald-500/10"
+            iconColor="text-success"
+            iconBgColor="bg-success-soft"
             subtitle={`${data.transactionsCount} transacciones`}
             trend={{
               value: data.comparisonWithPrevious.incomeChange,
@@ -213,8 +213,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={ArrowDownRight}
-            iconColor="text-rose-400"
-            iconBgColor="bg-rose-500/10"
+            iconColor="text-danger"
+            iconBgColor="bg-danger-soft"
             subtitle="Vs mes anterior"
             trend={{
               value: data.comparisonWithPrevious.expensesChange,
@@ -228,8 +228,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={TrendingUp}
-            iconColor={isSavingsPositive ? "text-cyan-400" : "text-rose-400"}
-            iconBgColor={isSavingsPositive ? "bg-cyan-500/10" : "bg-rose-500/10"}
+            iconColor={isSavingsPositive ? "text-info" : "text-danger"}
+            iconBgColor={isSavingsPositive ? "bg-info/10" : "bg-danger-soft"}
             subtitle="Ingresos - Gastos"
             trend={{
               value: savingsChange,
@@ -243,8 +243,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={DollarSign}
-            iconColor="text-blue-400"
-            iconBgColor="bg-blue-500/10"
+            iconColor="text-primary"
+            iconBgColor="bg-primary/10"
             subtitle="Gasto promedio"
           />
         </div>
@@ -289,8 +289,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={ArrowUpRight}
-            iconColor="text-emerald-400"
-            iconBgColor="bg-emerald-500/10"
+            iconColor="text-success"
+            iconBgColor="bg-success-soft"
             subtitle={`${transactionsCount} transacciones`}
           />
           <ReportStatCard
@@ -300,8 +300,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={ArrowDownRight}
-            iconColor="text-rose-400"
-            iconBgColor="bg-rose-500/10"
+            iconColor="text-danger"
+            iconBgColor="bg-danger-soft"
             subtitle="Total anual"
           />
           <ReportStatCard
@@ -311,8 +311,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={TrendingUp}
-            iconColor={savings >= 0 ? "text-cyan-400" : "text-rose-400"}
-            iconBgColor={savings >= 0 ? "bg-cyan-500/10" : "bg-rose-500/10"}
+            iconColor={savings >= 0 ? "text-info" : "text-danger"}
+            iconBgColor={savings >= 0 ? "bg-info/10" : "bg-danger-soft"}
             subtitle="Ingresos - Gastos"
           />
           <ReportStatCard
@@ -322,8 +322,8 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={DollarSign}
-            iconColor="text-blue-400"
-            iconBgColor="bg-blue-500/10"
+            iconColor="text-primary"
+            iconBgColor="bg-primary/10"
             subtitle="Ingreso promedio"
           />
         </div>
@@ -352,7 +352,7 @@ export default function ReportsPageClient() {
         {/* Top Category */}
         {data.topExpenseCategory && data.topExpenseCategory.name && (
           <div className="grid gap-6">
-            <div className="border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl p-6">
+            <div className="border border-border bg-card rounded-xl p-6">
               <h3 className="text-lg font-semibold mb-2">
                 Categoría con Mayor Gasto
               </h3>
@@ -364,14 +364,14 @@ export default function ReportsPageClient() {
                 <span className="text-xl font-bold">
                   {data.topExpenseCategory.name}
                 </span>
-                <span className="text-2xl font-bold text-rose-400 ml-auto">
+                <span className="text-2xl font-bold text-danger ml-auto">
                   $
                   {(data.topExpenseCategory.amount || 0).toLocaleString("es-MX", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
                 </span>
-                <span className="text-sm text-slate-400">
+                <span className="text-sm text-muted-foreground">
                   ({(data.topExpenseCategory.percentage || 0).toFixed(1)}% del total)
                 </span>
               </div>
@@ -401,16 +401,16 @@ export default function ReportsPageClient() {
               maximumFractionDigits: 2,
             })}`}
             icon={DollarSign}
-            iconColor="text-blue-400"
-            iconBgColor="bg-blue-500/10"
+            iconColor="text-primary"
+            iconBgColor="bg-primary/10"
             subtitle="Balance total"
           />
           <ReportStatCard
             title="Total de Cuentas"
             value={accounts.length.toString()}
             icon={TrendingUp}
-            iconColor="text-cyan-400"
-            iconBgColor="bg-cyan-500/10"
+            iconColor="text-info"
+            iconBgColor="bg-info/10"
             subtitle="Cuentas activas"
           />
         </div>
@@ -424,7 +424,7 @@ export default function ReportsPageClient() {
             xAxisKey="date"
             dataKeys={[{ key: "balance", label: "Balance", color: "#60a5fa" }]}
           />
-          <div className="border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl p-6">
+          <div className="border border-border bg-card rounded-xl p-6">
             <h3 className="text-lg font-semibold mb-4">
               Distribución por Cuenta
             </h3>
@@ -447,7 +447,7 @@ export default function ReportsPageClient() {
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -456,7 +456,7 @@ export default function ReportsPageClient() {
                         }}
                       />
                     </div>
-                    <span className="text-xs text-slate-400 min-w-[45px] text-right">
+                    <span className="text-xs text-muted-foreground min-w-[45px] text-right">
                       {(account.percentage || 0).toFixed(1)}%
                     </span>
                   </div>
@@ -470,7 +470,7 @@ export default function ReportsPageClient() {
   };
 
   return (
-    <div className="space-y-8 p-6 md:p-8 lg:p-10">
+    <div className="space-y-8 px-4 pt-6 sm:px-6 lg:px-10 lg:pt-8">
       {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
@@ -485,7 +485,7 @@ export default function ReportsPageClient() {
             size="sm"
             onClick={handleExportCSV}
             disabled={!reportData}
-            className="bg-slate-900 border-slate-800 hover:bg-slate-800"
+            className="bg-muted border-border hover:bg-muted"
           >
             <Download className="h-4 w-4 mr-2" />
             Exportar CSV
@@ -517,7 +517,7 @@ export default function ReportsPageClient() {
       {/* Error State */}
       {error && (
         <div className="border border-rose-800 bg-rose-900/20 rounded-lg p-4 text-center">
-          <p className="text-rose-400">{error}</p>
+          <p className="text-danger">{error}</p>
         </div>
       )}
 
@@ -533,10 +533,10 @@ export default function ReportsPageClient() {
 
       {/* Empty State */}
       {!loading && !error && !reportData && (
-        <div className="border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl p-12 text-center">
-          <FileText className="h-12 w-12 text-slate-500 mx-auto mb-4" />
+        <div className="border border-border bg-card rounded-xl p-12 text-center">
+          <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-semibold mb-2">No hay datos disponibles</h3>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-muted-foreground">
             Comienza registrando transacciones para ver tus reportes
           </p>
         </div>

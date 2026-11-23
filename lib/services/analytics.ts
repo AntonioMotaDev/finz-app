@@ -4,6 +4,7 @@
  * Funciones para calcular métricas financieras y preparar datos para visualizaciones
  */
 
+import { cache } from "react";
 import { prisma } from "@/lib/db/prisma";
 import { startOfMonth, endOfMonth, subMonths, format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -48,7 +49,7 @@ interface RecentTransaction {
 /**
  * Obtiene el balance total de todas las cuentas activas del usuario
  */
-export async function getTotalBalance(userId: string): Promise<number> {
+async function getTotalBalanceImpl(userId: string): Promise<number> {
   const accounts = await prisma.financialAccount.findMany({
     where: {
       userId,
@@ -65,7 +66,7 @@ export async function getTotalBalance(userId: string): Promise<number> {
 /**
  * Obtiene los ingresos del mes actual
  */
-export async function getMonthlyIncome(userId: string): Promise<{ total: number; count: number }> {
+async function getMonthlyIncomeImpl(userId: string): Promise<{ total: number; count: number }> {
   const now = new Date();
   const start = startOfMonth(now);
   const end = endOfMonth(now);
@@ -91,7 +92,7 @@ export async function getMonthlyIncome(userId: string): Promise<{ total: number;
 /**
  * Obtiene los gastos del mes actual
  */
-export async function getMonthlyExpenses(userId: string): Promise<{ total: number; count: number }> {
+async function getMonthlyExpensesImpl(userId: string): Promise<{ total: number; count: number }> {
   const now = new Date();
   const start = startOfMonth(now);
   const end = endOfMonth(now);
@@ -185,46 +186,58 @@ export async function getExpensesByCategory(userId: string): Promise<CategoryExp
  * Obtiene datos de ingresos vs gastos para los últimos 6 meses
  */
 export async function getIncomeVsExpensesChart(userId: string): Promise<MonthData[]> {
-  const months: MonthData[] = [];
   const now = new Date();
+  const rangeStart = startOfMonth(subMonths(now, 5));
+  const rangeEnd = endOfMonth(now);
 
-  // Obtener últimos 6 meses
+  // Una sola consulta para los 6 meses (antes: 6 consultas secuenciales)
+  const transactions = await prisma.transaction.findMany({
+    where: {
+      userId,
+      type: { in: ["INCOME", "EXPENSE"] },
+      date: { gte: rangeStart, lte: rangeEnd },
+    },
+    select: { type: true, amount: true, date: true },
+  });
+
+  const months: MonthData[] = [];
+  const index = new Map<string, MonthData>();
   for (let i = 5; i >= 0; i--) {
     const date = subMonths(now, i);
-    const start = startOfMonth(date);
-    const end = endOfMonth(date);
-
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        userId,
-        date: {
-          gte: start,
-          lte: end,
-        },
-      },
-      select: {
-        type: true,
-        amount: true,
-      },
-    });
-
-    const income = transactions
-      .filter((t: any) => t.type === "INCOME")
-      .reduce((sum: number, t: any) => sum + Number(t.amount), 0);
-
-    const expenses = transactions
-      .filter((t: any) => t.type === "EXPENSE")
-      .reduce((sum: number, t: any) => sum + Number(t.amount), 0);
-
-    months.push({
+    const entry: MonthData = {
       month: format(date, "MMM", { locale: es }),
-      income,
-      expenses,
-      savings: income - expenses,
-    });
+      income: 0,
+      expenses: 0,
+      savings: 0,
+    };
+    index.set(format(date, "yyyy-MM"), entry);
+    months.push(entry);
   }
 
+  for (const t of transactions) {
+    const entry = index.get(format(t.date, "yyyy-MM"));
+    if (!entry) continue;
+    const amount = Number(t.amount);
+    if (t.type === "INCOME") entry.income += amount;
+    else entry.expenses += amount;
+  }
+  for (const m of months) m.savings = m.income - m.expenses;
+
   return months;
+}
+
+/**
+ * Obtiene las cuentas activas para las tarjetas de saldo del dashboard
+ */
+export async function getAccountCards(userId: string, limit = 6) {
+  const accounts = await prisma.financialAccount.findMany({
+    where: { userId, isActive: true },
+    select: { id: true, name: true, type: true, balance: true, currency: true, color: true },
+    orderBy: { balance: "desc" },
+    take: limit,
+  });
+
+  return accounts.map((a) => ({ ...a, balance: Number(a.balance) }));
 }
 
 /**
@@ -363,3 +376,9 @@ export async function getMonthlyComparison(userId: string): Promise<{
     savingsChange: calculateChange(currentSavings, previousSavings),
   };
 }
+
+// Memoización por petición: varias secciones del dashboard (en streaming)
+// reutilizan el mismo resultado sin repetir consultas a la BD.
+export const getMonthlyIncome = cache(getMonthlyIncomeImpl);
+export const getMonthlyExpenses = cache(getMonthlyExpensesImpl);
+export const getTotalBalance = cache(getTotalBalanceImpl);

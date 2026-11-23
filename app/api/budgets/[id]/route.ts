@@ -124,19 +124,19 @@ export async function PATCH(
     
     // Manejar errores de validación de Zod
     if (error.name === "ZodError") {
-      console.error("Error de validación Zod:", JSON.stringify(error.errors, null, 2));
+      console.error("Error de validación Zod:", JSON.stringify(error.issues, null, 2));
       return NextResponse.json(
         { 
           error: "Datos inválidos", 
-          details: error.errors,
-          message: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(", ")
+          details: error.issues,
+          message: error.issues.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(", ")
         },
         { status: 400 }
       );
     }
     
     return NextResponse.json(
-      { error: error.message || "Error al actualizar presupuesto" },
+      { error: "Error al actualizar presupuesto" },
       { status: 500 }
     );
   }

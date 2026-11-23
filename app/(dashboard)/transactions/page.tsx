@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Plus, Download, ChevronLeft, ChevronRight } from "lucide-react";
 import {
@@ -13,9 +14,25 @@ import {
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const searchParams = useSearchParams();
+  // ?new=1 abre el diálogo (acceso rápido del dashboard); ?search= viene del buscador global
+  const [isDialogOpen, setIsDialogOpen] = useState(searchParams.get("new") === "1");
   const [editingTransaction, setEditingTransaction] = useState<any>(null);
-  const [filters, setFilters] = useState<any>({});
+  const [filters, setFilters] = useState<any>(() => {
+    const search = searchParams.get("search")?.slice(0, 100);
+    return search ? { search } : {};
+  });
+  const urlSearch = searchParams.get("search")?.slice(0, 100) ?? "";
+
+  // Si se busca de nuevo desde el header estando ya en esta página
+  useEffect(() => {
+    setFilters((prev: any) => {
+      if ((prev.search ?? "") === urlSearch) return prev;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { search, ...rest } = prev;
+      return urlSearch ? { ...rest, search: urlSearch } : rest;
+    });
+  }, [urlSearch]);
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 1,
@@ -83,7 +100,7 @@ export default function TransactionsPage() {
   };
 
   return (
-    <div className="flex-1 space-y-6 p-6 md:p-8">
+    <div className="space-y-6 px-4 pt-6 sm:px-6 lg:px-10 lg:pt-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -95,14 +112,13 @@ export default function TransactionsPage() {
         <div className="flex gap-2">
           <Button
             variant="outline"
-            className="border-slate-800 bg-slate-900 hover:bg-slate-800"
+            className="border-border bg-muted hover:bg-muted"
           >
             <Download className="h-4 w-4 mr-2" />
             Exportar
           </Button>
           <Button
             onClick={handleNewTransaction}
-            className="bg-blue-900 hover:bg-gray-800"
           >
             <Plus className="h-4 w-4 mr-2" />
             Nueva Transacción
@@ -112,17 +128,17 @@ export default function TransactionsPage() {
 
       {/* Resumen rápido */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="border border-slate-800 rounded-lg p-4 bg-slate-900/50">
+        <div className="border border-border rounded-lg p-4 bg-muted/50">
           <p className="text-sm text-muted-foreground">Total de transacciones</p>
           <p className="text-2xl font-bold mt-1">{pagination.totalCount}</p>
         </div>
-        <div className="border border-slate-800 rounded-lg p-4 bg-slate-900/50">
+        <div className="border border-border rounded-lg p-4 bg-muted/50">
           <p className="text-sm text-muted-foreground">Página actual</p>
           <p className="text-2xl font-bold mt-1">
             {pagination.currentPage} de {pagination.totalPages || 1}
           </p>
         </div>
-        <div className="border border-slate-800 rounded-lg p-4 bg-slate-900/50">
+        <div className="border border-border rounded-lg p-4 bg-muted/50">
           <p className="text-sm text-muted-foreground">Mostrando</p>
           <p className="text-2xl font-bold mt-1">
             {transactions.length} registros
@@ -132,6 +148,7 @@ export default function TransactionsPage() {
 
       {/* Filtros */}
       <TransactionFilters
+        key={urlSearch}
         onFilterChange={handleFilterChange}
         initialFilters={filters}
       />
@@ -158,7 +175,7 @@ export default function TransactionsPage() {
               size="sm"
               onClick={() => handlePageChange(pagination.currentPage - 1)}
               disabled={!pagination.hasPreviousPage}
-              className="border-slate-800 bg-slate-900 hover:bg-slate-800 disabled:opacity-50"
+              className="border-border bg-muted hover:bg-muted disabled:opacity-50"
             >
               <ChevronLeft className="h-4 w-4 mr-1" />
               Anterior
@@ -168,7 +185,7 @@ export default function TransactionsPage() {
               size="sm"
               onClick={() => handlePageChange(pagination.currentPage + 1)}
               disabled={!pagination.hasNextPage}
-              className="border-slate-800 bg-slate-900 hover:bg-slate-800 disabled:opacity-50"
+              className="border-border bg-muted hover:bg-muted disabled:opacity-50"
             >
               Siguiente
               <ChevronRight className="h-4 w-4 ml-1" />

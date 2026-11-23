@@ -43,12 +43,12 @@ export function ComparisonChart({
 }: ComparisonChartProps) {
   if (!data || data.length === 0) {
     return (
-      <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+      <Card className="border-border bg-card">
         <CardHeader>
           <CardTitle className="text-lg">{title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-slate-400 text-center py-8">
+          <p className="text-sm text-muted-foreground text-center py-8">
             No hay datos disponibles para mostrar
           </p>
         </CardContent>
@@ -59,16 +59,16 @@ export function ComparisonChart({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-slate-900 border border-slate-800 rounded-lg p-3 shadow-xl">
-          <p className="text-sm font-medium text-slate-200 mb-2">{label}</p>
+        <div className="bg-muted border border-border rounded-lg p-3 shadow-xl">
+          <p className="text-sm font-medium text-foreground mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center gap-2">
               <div
                 className="h-2 w-2 rounded-full"
                 style={{ backgroundColor: entry.color }}
               />
-              <span className="text-xs text-slate-300">{entry.name}:</span>
-              <span className="text-xs font-bold text-slate-100">
+              <span className="text-xs text-foreground/80">{entry.name}:</span>
+              <span className="text-xs font-bold text-foreground">
                 ${entry.value.toLocaleString("es-MX", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -83,7 +83,7 @@ export function ComparisonChart({
   };
 
   return (
-    <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+    <Card className="border-border bg-card">
       <CardHeader>
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
@@ -91,14 +91,14 @@ export function ComparisonChart({
         <ResponsiveContainer width="100%" height={300}>
           {type === "bar" ? (
             <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
               <XAxis
                 dataKey={xAxisKey}
-                stroke="#94a3b8"
+                stroke="var(--chart-axis)"
                 style={{ fontSize: "12px" }}
               />
               <YAxis
-                stroke="#94a3b8"
+                stroke="var(--chart-axis)"
                 style={{ fontSize: "12px" }}
                 tickFormatter={(value) => {
                   if (value >= 1000) {
@@ -126,14 +126,14 @@ export function ComparisonChart({
             </BarChart>
           ) : (
             <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
               <XAxis
                 dataKey={xAxisKey}
-                stroke="#94a3b8"
+                stroke="var(--chart-axis)"
                 style={{ fontSize: "12px" }}
               />
               <YAxis
-                stroke="#94a3b8"
+                stroke="var(--chart-axis)"
                 style={{ fontSize: "12px" }}
                 tickFormatter={(value) => {
                   if (value >= 1000) {

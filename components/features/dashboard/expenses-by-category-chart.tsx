@@ -21,23 +21,23 @@ export function ExpensesByCategoryChart({ data }: Props) {
     if (active && payload && payload.length) {
       const item = payload[0].payload;
       return (
-        <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 shadow-xl">
-          <p className="text-sm font-medium text-slate-300 mb-2">{item.name}</p>
+        <div className="rounded-lg border border-border bg-background p-3 shadow-xl">
+          <p className="text-sm font-medium text-foreground/80 mb-2">{item.name}</p>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <div
                 className="h-2 w-2 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
-              <span className="text-xs text-slate-400">Monto:</span>
-              <span className="text-xs font-medium text-slate-200">
+              <span className="text-xs text-muted-foreground">Monto:</span>
+              <span className="text-xs font-medium text-foreground">
                 ${item.amount.toLocaleString("es-MX", {
                   minimumFractionDigits: 2,
                 })}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400 ml-4">
+              <span className="text-xs text-muted-foreground ml-4">
                 {item.percentage.toFixed(1)}% del total
               </span>
             </div>
@@ -50,12 +50,12 @@ export function ExpensesByCategoryChart({ data }: Props) {
 
   if (!data || data.length === 0) {
     return (
-      <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+      <Card className="border-border bg-card">
         <CardHeader>
           <CardTitle className="text-lg">Gastos por Categoría</CardTitle>
         </CardHeader>
         <CardContent className="h-[300px] flex items-center justify-center">
-          <p className="text-sm text-slate-400">No hay gastos este mes</p>
+          <p className="text-sm text-muted-foreground">No hay gastos este mes</p>
         </CardContent>
       </Card>
     );
@@ -82,10 +82,10 @@ export function ExpensesByCategoryChart({ data }: Props) {
   const totalAmount = data.reduce((sum, cat) => sum + cat.amount, 0);
 
   return (
-    <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950">
+    <Card className="border-border bg-card">
       <CardHeader>
         <CardTitle className="text-lg">Gastos por Categoría</CardTitle>
-        <p className="text-sm text-slate-400">Este mes</p>
+        <p className="text-sm text-muted-foreground">Este mes</p>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col lg:flex-row items-center gap-4">
@@ -111,8 +111,8 @@ export function ExpensesByCategoryChart({ data }: Props) {
             </ResponsiveContainer>
             {/* Total en el centro */}
             <div className="text-center -mt-32 pointer-events-none">
-              <p className="text-xs text-slate-400">Total</p>
-              <p className="text-lg font-bold text-slate-200">
+              <p className="text-xs text-muted-foreground">Total</p>
+              <p className="text-lg font-bold text-foreground">
                 ${totalAmount.toLocaleString("es-MX", { minimumFractionDigits: 0 })}
               </p>
             </div>
@@ -123,22 +123,22 @@ export function ExpensesByCategoryChart({ data }: Props) {
             {chartData.map((category, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-900/50 transition-colors"
+                className="flex items-center justify-between p-2 rounded-lg hover:bg-muted transition-colors"
               >
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <div
                     className="h-3 w-3 rounded-full flex-shrink-0"
                     style={{ backgroundColor: category.color }}
                   />
-                  <span className="text-sm text-slate-300 truncate">
+                  <span className="text-sm text-foreground/80 truncate">
                     {category.name}
                   </span>
                 </div>
                 <div className="flex flex-col items-end flex-shrink-0 ml-2">
-                  <span className="text-sm font-medium text-slate-200">
+                  <span className="text-sm font-medium text-foreground">
                     ${category.amount.toLocaleString("es-MX", { minimumFractionDigits: 0 })}
                   </span>
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs text-muted-foreground">
                     {category.percentage.toFixed(1)}%
                   </span>
                 </div>

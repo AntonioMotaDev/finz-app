@@ -33,9 +33,9 @@ export function ReportStatCard({
   trend,
 }: ReportStatCardProps) {
   return (
-    <Card className="border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950 hover:border-slate-700 transition-colors">
+    <Card className="border-border bg-card hover:border-primary/40 transition-colors">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm font-medium text-slate-300">
+        <CardTitle className="text-sm font-medium text-foreground/80">
           {title}
         </CardTitle>
         <div className={cn("rounded-full p-2", iconBgColor)}>
@@ -47,13 +47,13 @@ export function ReportStatCard({
         {(subtitle || trend) && (
           <div className="flex items-center justify-between mt-1">
             {subtitle && (
-              <p className="text-xs text-slate-500">{subtitle}</p>
+              <p className="text-xs text-muted-foreground">{subtitle}</p>
             )}
             {trend && (
               <div
                 className={cn(
                   "text-xs font-medium",
-                  trend.isPositive ? "text-emerald-400" : "text-rose-400"
+                  trend.isPositive ? "text-success" : "text-danger"
                 )}
               >
                 {trend.isPositive ? "+" : ""}

@@ -62,7 +62,7 @@ export function BudgetCard({ budget, onEdit, onDelete }: BudgetCardProps) {
     : Icons.Tag;
 
   return (
-    <Card className={`relative overflow-hidden transition-all hover:shadow-md border border-slate-600 ${
+    <Card className={`relative overflow-hidden transition-all hover:shadow-md border border-border ${
       !budget.isActive ? "opacity-60" : ""
     }`}>
       {/* Barra de color lateral según nivel de alerta */}

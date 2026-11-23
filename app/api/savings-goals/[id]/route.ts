@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/db/prisma"
@@ -87,15 +88,14 @@ export async function PATCH(
     
     if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { error: "Datos inválidos", details: JSON.stringify(error) }, 
+        { error: "Datos inválidos", details: error instanceof z.ZodError ? error.issues : undefined }, 
         { status: 400 }
       )
     }
 
     return NextResponse.json(
       { 
-        error: "Error al actualizar la meta de ahorro",
-        details: error instanceof Error ? error.message : String(error)
+        error: "Error al actualizar la meta de ahorro"
       },
       { status: 500 }
     )

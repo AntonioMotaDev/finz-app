@@ -159,7 +159,7 @@ export function GoalForm({
         <div className="flex gap-3 pt-4">
           <Button
             type="submit"
-            className="flex-1 bg-blue-900 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 text-white"
+            className="flex-1"
             disabled={isSubmitting}
             size="lg"
           >

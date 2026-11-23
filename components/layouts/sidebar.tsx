@@ -4,9 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
-  LayoutDashboard,
+  LayoutGrid,
   Wallet,
   ArrowLeftRight,
   Tags,
@@ -15,8 +14,7 @@ import {
   Settings,
   LogOut,
   MoreHorizontal,
-  TrendingUp,
-  X,
+  PiggyBank,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import {
@@ -26,52 +24,68 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { FinzLogo } from "@/components/layouts/finz-logo";
 
 // Navegación principal - se muestra en bottom nav móvil
 const mainNavigation = [
-  {
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Cuentas",
-    href: "/accounts",
-    icon: Wallet,
-  },
-  {
-    name: "Transacciones",
-    href: "/transactions",
-    icon: ArrowLeftRight,
-  },
-  {
-    name: "Reportes",
-    href: "/reports",
-    icon: PieChart,
-  },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutGrid },
+  { name: "Cuentas", href: "/accounts", icon: Wallet },
+  { name: "Transacciones", href: "/transactions", icon: ArrowLeftRight },
+  { name: "Reportes", href: "/reports", icon: PieChart },
 ];
 
-// Navegación secundaria - se muestra en el dropdown "Más"
+// Navegación secundaria - se muestra en el menú "Más" en móvil
 const secondaryNavigation = [
-  {
-    name: "Categorías",
-    href: "/categories",
-    icon: Tags,
-  },
-  {
-    name: "Presupuestos",
-    href: "/budgets",
-    icon: Target,
-  },
-  {
-    name: "Metas de Ahorro",
-    href: "/goals",
-    icon: TrendingUp,
-  },
+  { name: "Categorías", href: "/categories", icon: Tags },
+  { name: "Presupuestos", href: "/budgets", icon: Target },
+  { name: "Metas de Ahorro", href: "/goals", icon: PiggyBank },
 ];
 
-// Toda la navegación para desktop
 const allNavigation = [...mainNavigation, ...secondaryNavigation];
+
+const isActivePath = (pathname: string, href: string) =>
+  pathname === href || pathname.startsWith(`${href}/`);
+
+/** Elemento del rail: icono + tooltip CSS (sin JS extra) + muesca de estado activo. */
+function RailLink({
+  href,
+  label,
+  icon: Icon,
+  active,
+}: {
+  href: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  active: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-label={label}
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "group relative flex h-12 w-12 items-center justify-center rounded-2xl transition-colors",
+        active
+          ? "bg-white text-ink shadow-sm"
+          : "text-white/55 hover:bg-white/10 hover:text-white"
+      )}
+    >
+      {active && (
+        <span
+          aria-hidden
+          className="absolute -left-[22px] top-1/2 h-3 w-1.5 -translate-y-1/2 rounded-r-full bg-white"
+        />
+      )}
+      <Icon className="h-5 w-5" />
+      <span
+        role="tooltip"
+        className="pointer-events-none absolute left-full ml-4 whitespace-nowrap rounded-xl bg-popover px-3 py-1.5 text-xs font-semibold text-popover-foreground opacity-0 shadow-lg ring-1 ring-border transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+      >
+        {label}
+      </span>
+    </Link>
+  );
+}
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -81,135 +95,113 @@ export function Sidebar() {
     await signOut({ callbackUrl: "/signin" });
   };
 
+  const isSecondaryActive =
+    secondaryNavigation.some((i) => isActivePath(pathname, i.href)) ||
+    isActivePath(pathname, "/settings");
+
   return (
     <>
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:block fixed top-0 left-0 z-40 h-screen w-64 bg-gradient-to-b from-slate-900 via-slate-900 to-black border-r border-slate-800">
-        <div className="flex h-full flex-col w-full">
-          {/* Logo */}
-          <div className="flex h-16 items-center gap-3 px-6 border-b border-slate-800">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-700 to-gray-700 shadow-lg">
-              <Wallet className="h-6 w-6 text-white" />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-gray-400 bg-clip-text text-transparent">
-              Finz
-            </span>
-          </div>
+      {/* Desktop rail (estilo "bezel" oscuro) */}
+      <aside
+        aria-label="Navegación principal"
+        className="fixed inset-y-0 left-0 z-40 hidden w-[88px] flex-col items-center bg-ink py-7 dark:bg-black lg:flex"
+      >
+        <Link href="/dashboard" aria-label="Finz - inicio" className="mb-10">
+          <FinzLogo className="h-9 w-9 text-white" />
+        </Link>
 
-          {/* Navigation */}
-          <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
-            {allNavigation.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                    isActive
-                      ? "bg-gradient-to-r from-gray-900 to-blue-900 text-white shadow-lg shadow-blue-500/50"
-                      : "text-slate-400 hover:bg-slate-800 hover:text-slate-100"
-                  )}
-                >
-                  <item.icon className="h-5 w-5" />
-                  {item.name}
-                </Link>
-              );
-            })}
-          </nav>
+        <nav className="flex flex-1 flex-col items-center gap-3">
+          {allNavigation.map((item) => (
+            <RailLink
+              key={item.href}
+              href={item.href}
+              label={item.name}
+              icon={item.icon}
+              active={isActivePath(pathname, item.href)}
+            />
+          ))}
+          <RailLink
+            href="/settings"
+            label="Configuración"
+            icon={Settings}
+            active={isActivePath(pathname, "/settings")}
+          />
+        </nav>
 
-          {/* Bottom section */}
-          <div className="border-t border-slate-800 p-3 space-y-1">
-            <Link
-              href="/settings"
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                pathname === "/settings"
-                  ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/50"
-                  : "text-slate-400 hover:bg-slate-800 hover:text-slate-100"
-              )}
-            >
-              <Settings className="h-5 w-5" />
-              Configuración
-            </Link>
-            <button
-              onClick={handleSignOut}
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-400 transition-all duration-200 hover:bg-red-900/20 hover:text-red-400"
-            >
-              <LogOut className="h-5 w-5" />
-              Cerrar Sesión
-            </button>
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={handleSignOut}
+          aria-label="Cerrar sesión"
+          title="Cerrar sesión"
+          className="flex h-12 w-12 items-center justify-center rounded-2xl text-white/55 transition-colors hover:bg-white/10 hover:text-white"
+        >
+          <LogOut className="h-5 w-5" />
+        </button>
       </aside>
 
       {/* Mobile/Tablet Bottom Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-lg border-t border-slate-800 pb-safe">
+      <nav
+        aria-label="Navegación principal"
+        className="fixed inset-x-3 bottom-3 z-50 rounded-3xl bg-ink/95 shadow-2xl backdrop-blur-lg pb-safe dark:bg-black/95 lg:hidden"
+      >
         <div className="flex items-center justify-around px-2 py-2">
-          {/* Main navigation items */}
           {mainNavigation.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = isActivePath(pathname, item.href);
             return (
               <Link
-                key={item.name}
+                key={item.href}
                 href={item.href}
+                aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "flex flex-col items-center justify-center gap-1 rounded-xl px-4 py-2 transition-all duration-200 min-w-[64px]",
+                  "flex min-w-[60px] flex-col items-center justify-center gap-1 rounded-2xl px-3 py-2 transition-all duration-200",
                   isActive
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/50"
-                    : "text-slate-400 hover:text-slate-200 active:scale-95"
+                    ? "bg-white text-ink"
+                    : "text-white/60 hover:text-white active:scale-95"
                 )}
               >
-                <item.icon className={cn("h-5 w-5", isActive && "scale-110")} />
-                <span className="text-[10px] font-medium">{item.name}</span>
+                <item.icon className="h-5 w-5" />
+                <span className="text-[10px] font-semibold">{item.name}</span>
               </Link>
             );
           })}
 
-          {/* More dropdown */}
           <DropdownMenu open={isMoreMenuOpen} onOpenChange={setIsMoreMenuOpen}>
             <DropdownMenuTrigger asChild>
               <button
+                type="button"
                 className={cn(
-                  "flex flex-col items-center justify-center gap-1 rounded-xl px-4 py-2 transition-all duration-200 min-w-[64px]",
-                  (pathname === "/categories" || pathname === "/budgets" || pathname === "/goals" || pathname === "/settings")
-                    ? "bg-gray-600 text-white shadow-lg shadow-blue-500/50"
-                    : "text-slate-400 hover:text-slate-200 active:scale-95"
+                  "flex min-w-[60px] flex-col items-center justify-center gap-1 rounded-2xl px-3 py-2 transition-all duration-200",
+                  isSecondaryActive
+                    ? "bg-white text-ink"
+                    : "text-white/60 hover:text-white active:scale-95"
                 )}
               >
                 <MoreHorizontal className="h-5 w-5" />
-                <span className="text-[10px] font-medium">Más</span>
+                <span className="text-[10px] font-semibold">Más</span>
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              side="top"
-              className="w-48 mb-2"
-            >
-              {secondaryNavigation.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <DropdownMenuItem key={item.name} asChild>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "flex items-center gap-3 cursor-pointer",
-                        isActive && "bg-slate-900 text-blue-400"
-                      )}
-                    >
-                      <item.icon className="h-4 w-4" />
-                      {item.name}
-                    </Link>
-                  </DropdownMenuItem>
-                );
-              })}
+            <DropdownMenuContent align="end" side="top" className="mb-2 w-52">
+              {secondaryNavigation.map((item) => (
+                <DropdownMenuItem key={item.href} asChild>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex cursor-pointer items-center gap-3",
+                      isActivePath(pathname, item.href) && "text-primary"
+                    )}
+                  >
+                    <item.icon className="h-4 w-4" />
+                    {item.name}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link
                   href="/settings"
                   className={cn(
-                    "flex items-center gap-3 cursor-pointer",
-                    pathname === "/settings" && "bg-slate-900 text-blue-400"
+                    "flex cursor-pointer items-center gap-3",
+                    isActivePath(pathname, "/settings") && "text-primary"
                   )}
                 >
                   <Settings className="h-4 w-4" />
@@ -218,18 +210,15 @@ export function Sidebar() {
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleSignOut}
-                className="text-red-400 focus:text-red-400 cursor-pointer"
+                className="cursor-pointer text-danger focus:text-danger"
               >
-                <LogOut className="h-4 w-4 mr-3" />
-                Cerrar Sesión
+                <LogOut className="mr-3 h-4 w-4" />
+                Cerrar sesión
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </nav>
-
-      {/* Bottom spacer for mobile content */}
-      <div className="h-20 lg:hidden" />
     </>
   );
 }
